@@ -46,7 +46,8 @@ func init() {
 }
 
 func setDefaults(v *viper.Viper) {
-	v.SetDefault("setting", "value")
+	v.SetDefault("download_type", ".epub3.images")
+	v.SetDefault("update_previously_downloaded", false)
 }
 
 func readViperConfig(appName string) *viper.Viper {

@@ -1,2 +1,6 @@
 ---
-# Place the config of your app here
+# What type of book files you would like to download
+download_type: .epub3.images
+# Whether to re-download updated books that already exist
+update_previously_downloaded: false
+
