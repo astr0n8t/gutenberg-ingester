@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/astr0n8t/APP_NAME/internal"
+	"github.com/astr0n8t/gutenberg-ingester/internal"
 	"github.com/spf13/cobra"
 )
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "APP_NAME",
+	Use:   "gutenberg-ingester",
 	Short: "SHORT DESCRIPTION",
 	Long: `LONG DESCRIPTION 
 	WITH MULTIPLE LINES`,

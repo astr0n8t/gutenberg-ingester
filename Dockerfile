@@ -2,8 +2,8 @@
 ARG BUILDPLATFORM
 FROM --platform=${BUILDPLATFORM} golang:1.24.1 AS build-stage
 
-LABEL app="APP_NAME"
-LABEL REPO="https://github.com/astr0n8t/APP_NAME"
+LABEL app="gutenberg-ingester"
+LABEL REPO="https://github.com/astr0n8t/gutenberg-ingester"
 
 WORKDIR /app
 
@@ -20,15 +20,15 @@ COPY version/*.go ./version/
 ARG TARGETOS
 ARG TARGETARCH
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /APP_NAME
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /gutenberg-ingester
 
 # Deploy the application binary into a lean image
 FROM gcr.io/distroless/static-debian11 AS build-release-stage
 
 WORKDIR /
 
-COPY --from=build-stage /APP_NAME /APP_NAME
+COPY --from=build-stage /gutenberg-ingester /gutenberg-ingester
 
 USER nonroot:nonroot
 
-ENTRYPOINT ["/APP_NAME"]
+ENTRYPOINT ["/gutenberg-ingester"]

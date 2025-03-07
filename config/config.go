@@ -42,7 +42,7 @@ func LoadConfigProvider(appName string) Provider {
 }
 
 func init() {
-	defaultConfig = readViperConfig("UPPER_APP_NAME")
+	defaultConfig = readViperConfig("UPPER_gutenberg-ingester")
 }
 
 func setDefaults(v *viper.Viper) {
@@ -58,7 +58,7 @@ func readViperConfig(appName string) *viper.Viper {
 	v.SetConfigType("yaml")
 
 	v.AddConfigPath(".")
-	v.AddConfigPath("/etc/APP_NAME/")
+	v.AddConfigPath("/etc/gutenberg-ingester/")
 
 	v.ReadInConfig()
 

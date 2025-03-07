@@ -5,10 +5,10 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/astr0n8t/APP_NAME/config"
+	"github.com/astr0n8t/gutenberg-ingester/config"
 )
 
-// Runs APP_NAME
+// Runs gutenberg-ingester
 func Run() {
 
 	// Make sure we can load config
