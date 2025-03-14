@@ -4,8 +4,6 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"encoding/xml"
-	"io/ioutil"
 
 	"github.com/astr0n8t/gutenberg-ingester/config"
 )
@@ -17,19 +15,24 @@ func Run() {
 	config := config.Config()
 	log.Printf("Loaded config file %v", config.ConfigFileUsed())
 
-	// Insert main app code here
-	xmlFile, _ := os.Open("tests/example.xml")
 
-	bytes, _ := ioutil.ReadAll(xmlFile)
+	rss, err := pullRSS()
+	if err != nil {
+		log.Printf("issue pulling rss feed: %v", err)
+	}
 
-	var collection Collection
-
-	xml.Unmarshal(bytes, &collection)
-
-	url, _ := collection.Records[0].URL()
-	log.Printf("URL is %v", url)
-	url, _ = collection.Records[1].URL()
-	log.Printf("URL is %v", url)
+	for _, i := range rss.Channel.Items {
+		id, idErr := i.Id()
+		if idErr != nil {
+			log.Printf("Issue unmarshalling XML: %v", idErr)
+		}
+		log.Printf("ID is %v\n", id)
+		title, titleErr := i.Title()
+		if titleErr != nil {
+			log.Printf("Issue unmarshalling XML: %v", titleErr)
+		}
+		log.Printf("Title is %v\n", title)
+	}
 
 	// Don't exit until we receive stop from the OS
 	stop := make(chan os.Signal, 1)
