@@ -7,9 +7,16 @@ import (
     "io/ioutil"
     "encoding/json"
     "encoding/base64"
-    "encoding/binary"
     "compress/gzip"
 )
+
+func NewHistory() *History {
+    return &History{
+        // Start with 80KB of memory
+        // PG has over 70K entries as of date 
+        bitmap: make([]uint8, 80000),
+    }
+}
 
 // Function to set the index
 // i: index to set 
@@ -95,32 +102,18 @@ func (h *History) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("failed to read decompressed DB download history: %v", bytesReadErr)
     }
 
-    // Convert to byte slice in big-endian order
-    var historyBuffer bytes.Buffer
-    binary.Write(&historyBuffer, binary.NativeEndian, historyData) 
-
-    h.bitmap = historyBuffer.Bytes()
+    h.bitmap = historyData
 
     return nil
 }
 
 func (h History) MarshalJSON() ([]byte, error) {
-   // historyAsBytes := make([]byte, len(h.bitmap))
-
-   // for i := 0; i < len(h.bitmap); i++ {
-   //     binary.PutUvarint(historyAsBytes[i+0:i+4], h.bitmap[i]) 
-   // }
-
-    // Convert to byte slice in big-endian order
-    var historyBuffer bytes.Buffer
-    binary.Write(&historyBuffer, binary.BigEndian, h.bitmap) 
-
     // get a gzip writer ready
     var buf bytes.Buffer
     writer := gzip.NewWriter(&buf)
 
     // compress the data
-    _, compressErr := writer.Write(historyBuffer.Bytes())
+    _, compressErr := writer.Write(h.bitmap)
     if compressErr != nil {
 		return nil, fmt.Errorf("failed to compress DB download history: %v", compressErr)
     }
