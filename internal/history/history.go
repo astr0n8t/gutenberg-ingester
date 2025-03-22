@@ -75,6 +75,30 @@ func setIntAtIndex(i int, d uint8) uint8 {
     return d + (1 << i)
 }
 
+// Custom json serialization function
+// Compresses the history with gzip and base64 encodes it
+func (h History) MarshalJSON() ([]byte, error) {
+    // get a gzip writer ready
+    var buf bytes.Buffer
+    writer := gzip.NewWriter(&buf)
+
+    // compress the data
+    _, compressErr := writer.Write(h.bitmap)
+    if compressErr != nil {
+		return nil, fmt.Errorf("failed to compress DB download history: %v", compressErr)
+    }
+
+    writer.Close()
+
+    // base64 encode and serialize it
+    serializedHistory := base64.StdEncoding.EncodeToString(buf.Bytes())
+    return json.Marshal(map[string]interface{}{
+        "history": serializedHistory,
+    })
+}
+
+// Custom json deserialization function
+// Base64 decodes the data and decompresses the history with gzip
 func (h *History) UnmarshalJSON(data []byte) error {
     var jsonData map[string]interface{}
     if unmarhsalErr := json.Unmarshal(data, &jsonData); unmarhsalErr != nil {
@@ -105,25 +129,5 @@ func (h *History) UnmarshalJSON(data []byte) error {
     h.bitmap = historyData
 
     return nil
-}
-
-func (h History) MarshalJSON() ([]byte, error) {
-    // get a gzip writer ready
-    var buf bytes.Buffer
-    writer := gzip.NewWriter(&buf)
-
-    // compress the data
-    _, compressErr := writer.Write(h.bitmap)
-    if compressErr != nil {
-		return nil, fmt.Errorf("failed to compress DB download history: %v", compressErr)
-    }
-
-    writer.Close()
-
-    // base64 encode and serialize it
-    serializedHistory := base64.StdEncoding.EncodeToString(buf.Bytes())
-    return json.Marshal(map[string]interface{}{
-        "history": serializedHistory,
-    })
 }
 

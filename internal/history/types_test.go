@@ -35,6 +35,13 @@ func TestMarshalHistory(t *testing.T) {
 		t.Errorf("Unable to marshal empty history to json %v", err1)
 	}
 
+	hash1 := sha256.New()
+	hash1.Write(h1.bitmap)
+	hashSum1 := hash1.Sum(nil)
+	hexHash1 := fmt.Sprintf("%x", hashSum1)
+
+	fmt.Printf("SHA256 Hash of Empty History: %s\n", hexHash1)
+
 	fmt.Printf("Empty history in json: %v\n", string(jsonData1))
 
 
@@ -52,6 +59,12 @@ func TestMarshalHistory(t *testing.T) {
 		t.Errorf("Unable to marshal partially set history to json %v", err2)
 	}
 
+	hash2 := sha256.New()
+	hash2.Write(h2.bitmap)
+	hashSum2 := hash2.Sum(nil)
+	hexHash2 := fmt.Sprintf("%x", hashSum2)
+	fmt.Printf("SHA256 Hash of Partially Set History: %s\n", hexHash2)
+
 	fmt.Printf("Partially set history in json: %v\n", string(jsonData2))
 
 
@@ -65,6 +78,12 @@ func TestMarshalHistory(t *testing.T) {
 	if err3 != nil {
 		t.Errorf("Unable to marshal fully set history to json %v", err3)
 	}
+
+	hash3 := sha256.New()
+	hash3.Write(h3.bitmap)
+	hashSum3 := hash3.Sum(nil)
+	hexHash3 := fmt.Sprintf("%x", hashSum3)
+	fmt.Printf("SHA256 Hash of Fully Set History: %s\n", hexHash3)
 
 	fmt.Printf("Fully set history in json: %v\n", string(jsonData3))
 }
