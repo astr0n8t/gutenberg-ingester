@@ -4,10 +4,11 @@ import (
 	"net/http"
 	"encoding/xml"
 	"io/ioutil"
+	"github.com/astr0n8t/gutenberg-ingester/internal/rss"
 )
 
-func pullRSS() (RSS, error) {
-	var rss RSS
+func pullRSS() (rss.RSS, error) {
+	var rss rss.RSS
 
 	resp, err := http.Get("https://www.gutenberg.org/cache/epub/feeds/today.rss")
 	if err != nil {
