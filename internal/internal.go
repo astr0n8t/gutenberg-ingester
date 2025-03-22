@@ -24,12 +24,12 @@ func Run() {
 	for _, i := range rss.Channel.Items {
 		id, idErr := i.Id()
 		if idErr != nil {
-			log.Printf("Issue unmarshalling XML: %v", idErr)
+			log.Printf("Issue unmarshling XML: %v", idErr)
 		}
 		log.Printf("ID is %v\n", id)
 		title, titleErr := i.Title()
 		if titleErr != nil {
-			log.Printf("Issue unmarshalling XML: %v", titleErr)
+			log.Printf("Issue unmarshling XML: %v", titleErr)
 		}
 		log.Printf("Title is %v\n", title)
 	}

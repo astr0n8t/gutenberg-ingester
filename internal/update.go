@@ -7,10 +7,10 @@ import (
 	"github.com/astr0n8t/gutenberg-ingester/internal/rss"
 )
 
-func pullRSS() (rss.RSS, error) {
+func pullRSS(url string) (rss.RSS, error) {
 	var rss rss.RSS
 
-	resp, err := http.Get("https://www.gutenberg.org/cache/epub/feeds/today.rss")
+	resp, err := http.Get(url)
 	if err != nil {
     	return rss, err
 	}
