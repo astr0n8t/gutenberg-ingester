@@ -95,7 +95,11 @@ func (h *History) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("failed to read decompressed DB download history: %v", bytesReadErr)
     }
 
-    h.bitmap = historyData
+    // Convert to byte slice in big-endian order
+    var historyBuffer bytes.Buffer
+    binary.Write(&historyBuffer, binary.NativeEndian, historyData) 
+
+    h.bitmap = historyBuffer.Bytes()
 
     return nil
 }
