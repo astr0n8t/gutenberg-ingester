@@ -1,4 +1,4 @@
-package records 
+package collection
 
 import (
 	"encoding/xml"
@@ -42,4 +42,3 @@ func TestParseXML(t *testing.T) {
 		fmt.Printf("URL is %v\n", url)
 	}
 }
-

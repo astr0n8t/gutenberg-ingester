@@ -1,17 +1,29 @@
 ---
 # The config file with its defaults
 
+# Where to save the download database to
+# The database just keeps track if it has processed a specific ID before
+database_location: /var/gutenberg-ingester/db.json
 # What type of book files you would like to download
-download_type: .epub3.images
+download_types: 
+  - .epub3.images
+  - .epub
+  - .txt
+# How to interpret download_types:
+# sequential: try the first type, then if not available move to the next, and so on
+# parallel: grab all of the download_types listed
+download_type_precedence: sequential
 # The number of seconds to wait before downloading the next file
 download_delay: 2
+# Filter download by language
+# Supported values are all (must be the first and only item in the list), 
+# english, french, german, finnish, dutch, italian, portuguese
+download_languages: 
+  - english
 # Whether to re-download updated books that already exist
 update_previously_downloaded: false
-# The URL to pull the RSS feed from PG
-rss_feed_url: https://www.gutenberg.org/cache/epub/feeds/today.rss
-# The URL to pull the XML catalog from PG
-gutenberg_xml_url: https://www.gutenberg.org/cache/epub/feeds/pgmarc.xml.gz
+# The URL to pull the catalog from PG
+gutenberg_feed_url: https://www.gutenberg.org/cache/epub/
 # The URL to pull files from PG
 gutenberg_mirror_url: https://www.gutenberg.org/ebooks/
-
 

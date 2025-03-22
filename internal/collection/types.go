@@ -1,15 +1,15 @@
-package records 
+package collection
 
 import (
 	"encoding/xml"
 )
 
 type Collection struct {
-	XMLName xml.Name     `xml:"collection"`
-	Records []BookRecord `xml:"record"`
+	XMLName xml.Name           `xml:"collection"`
+	Records []CollectionRecord `xml:"record"`
 }
 
-type BookRecord struct {
+type CollectionRecord struct {
 	Text          string         `xml:",chardata"`
 	Leader        string         `xml:"leader"`
 	Controlfields []ControlField `xml:"controlfield"`
@@ -33,4 +33,3 @@ type SubField struct {
 	Text string `xml:",chardata"`
 	Code string `xml:"code,attr"`
 }
-

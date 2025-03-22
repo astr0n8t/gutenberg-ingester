@@ -42,12 +42,18 @@ func LoadConfigProvider(appName string) Provider {
 }
 
 func init() {
-	defaultConfig = readViperConfig("UPPER_gutenberg-ingester")
+	defaultConfig = readViperConfig("GUTENBERG_INGESTER")
 }
 
 func setDefaults(v *viper.Viper) {
-	v.SetDefault("download_type", ".epub3.images")
+	v.SetDefault("database_location", "/var/gutenberg-ingester/db.json")
+	v.SetDefault("download_type", []string{".epub3.images", ".epub", ".txt"})
+	v.SetDefault("download_type_precedence", "sequential")
+	v.SetDefault("download_delay", 2)
+	v.SetDefault("download_languages", []string{"english"})
 	v.SetDefault("update_previously_downloaded", false)
+	v.SetDefault("gutenberg_feed_url", "https://www.gutenberg.org/cache/epub/")
+	v.SetDefault("gutenberg_mirror_url", "https://www.gutenberg.org/ebooks/")
 }
 
 func readViperConfig(appName string) *viper.Viper {

@@ -1,10 +1,10 @@
 package internal
 
 import (
-	"net/http"
 	"encoding/xml"
-	"io/ioutil"
 	"github.com/astr0n8t/gutenberg-ingester/internal/rss"
+	"io/ioutil"
+	"net/http"
 )
 
 func pullRSS(url string) (rss.RSS, error) {
@@ -12,7 +12,7 @@ func pullRSS(url string) (rss.RSS, error) {
 
 	resp, err := http.Get(url)
 	if err != nil {
-    	return rss, err
+		return rss, err
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)

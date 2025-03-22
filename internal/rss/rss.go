@@ -1,6 +1,7 @@
-package rss 
+package rss
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -29,4 +30,30 @@ func (b *BookItem) Title() (string, error) {
 // Returns the URL of the record
 func (b *BookItem) URL() (string, error) {
 	return b.Link, nil
+}
+
+// Returns the language of the record
+func (b *BookItem) Language() (string, error) {
+	descParts := strings.Split(b.Description, `Language: `)
+	lang := descParts[len(descParts)-1]
+
+	languages := map[string]string{
+		"English":    "english",
+		"French":     "french",
+		"German":     "german",
+		"Finnish":    "finnish",
+		"Dutch":      "dutch",
+		"Italian":    "italian",
+		"Portuguese": "portuguese",
+	}
+
+	normalizedLang, ok := languages[lang]
+
+	if !ok {
+		id, _ := b.Id()
+		return "", fmt.Errorf("failed to process language for rss item: %v with lang: %v", id, lang)
+
+	}
+
+	return normalizedLang, nil
 }

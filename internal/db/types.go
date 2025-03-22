@@ -1,16 +1,10 @@
-package db 
+package db
 
 import (
-	"encoding/xml"
+	"github.com/astr0n8t/gutenberg-ingester/internal/history"
 )
 
 type DB struct {
-	version int `json: version`
-	
-}
-
-
-func (b *BitField) UnmarshalJSON(data []byte) error {
-    // ...
-    return nil
+	Version  int             `json:"version"`
+	Download history.History `json:"download_history"`
 }
