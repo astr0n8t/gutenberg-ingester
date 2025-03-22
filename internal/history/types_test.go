@@ -82,7 +82,7 @@ func TestUnMarshalHistory(t *testing.T) {
 	var h2 History
 
 	json.Unmarshal(s2, &h2)
-	if h2.getHistory(122) == true && h2.getHistory(300) == true {
+	if h2.getHistory(122) == false || h2.getHistory(300) == false || h2.getHistory(200) == true {
 		t.Errorf("Unable to unmarshal partially set history to json")
 	}
 	fmt.Printf("Length of unmarshalled history for partially set history: %v\n", len(h2.bitmap))
@@ -91,7 +91,7 @@ func TestUnMarshalHistory(t *testing.T) {
 	var h3 History
 
 	json.Unmarshal(s3, &h3)
-	if h1.getHistory(1999) == true {
+	if h3.getHistory(19999) == false {
 		t.Errorf("Unable to unmarshal partially set history to json")
 	}
 	fmt.Printf("Length of unmarshalled history for fully set history: %v\n", len(h3.bitmap))
