@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
+	"fmt"
 )
 
 func TestParseXML(t *testing.T) {
@@ -22,4 +23,20 @@ func TestParseXML(t *testing.T) {
 	if err != nil {
 		t.Errorf("Issue unmarshling XML: %v", err)
 	}
+
+	id, idErr := rdf.Id()
+	if idErr != nil {
+		t.Errorf("Issue unmarshling XML: %v", idErr)
+	}
+	fmt.Printf("ID is %v\n", id)
+	title, titleErr := rdf.Title()
+	if titleErr != nil {
+		t.Errorf("Issue unmarshling XML: %v", titleErr)
+	}
+	fmt.Printf("Title is %v\n", title)
+	url, urlErr := rdf.URL()
+	if urlErr != nil {
+		t.Errorf("Issue unmarshling XML: %v", urlErr)
+	}
+	fmt.Printf("URL is %v\n", url)
 }
