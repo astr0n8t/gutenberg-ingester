@@ -3,7 +3,7 @@ package db
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/astr0n8t/gutenberg-ingester/internal/history"
+	"github.com/astr0n8t/gutenberg-ingester/pkg/history"
 	"os"
 )
 

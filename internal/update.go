@@ -2,7 +2,7 @@ package internal
 
 import (
 	"encoding/xml"
-	"github.com/astr0n8t/gutenberg-ingester/internal/rss"
+	"github.com/astr0n8t/gutenberg-ingester/pkg/rss"
 	"io/ioutil"
 	"net/http"
 )

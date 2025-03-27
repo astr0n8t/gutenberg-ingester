@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/astr0n8t/gutenberg-ingester/internal/history"
+	"github.com/astr0n8t/gutenberg-ingester/pkg/history"
 )
 
 type DB struct {
