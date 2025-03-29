@@ -56,7 +56,7 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("gutenberg_mirror_url", "https://www.gutenberg.org/ebooks/")
 }
 
-func setDevOvverideDefaults(v *viper.Viper) {
+func setDevOverideDefaults(v *viper.Viper) {
 	v.SetDefault("database_location", "/tmp/gutenberg-ingester-db.json")
 }
 
@@ -90,7 +90,7 @@ func readViperDevConfig(appName string) *viper.Viper {
 	v := viper.New()
 
 	setDefaults(v)
-	setDevOvverideDefaults(v)
+	setDevOverideDefaults(v)
 
 	v.SetEnvPrefix(appName)
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))

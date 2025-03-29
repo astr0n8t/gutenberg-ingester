@@ -19,7 +19,6 @@ func pullRSS(url string) (rss.RSS, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 
 	err = xml.Unmarshal(body, &rss)
-
 	if err != nil {
 		return rss, err
 	}

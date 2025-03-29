@@ -32,7 +32,6 @@ func TestWriteDB(t *testing.T) {
 
 	testFile := "/tmp/gutenberg_test1_db.json"
 	err := db.WriteDBToFile(testFile)
-
 	if err != nil {
 		t.Errorf("Unable to write empty DB to json file %v", err)
 	}

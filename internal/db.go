@@ -2,12 +2,13 @@ package internal
 
 import (
 	"fmt"
-	"time"
 	"log"
+	"time"
+
 	"github.com/astr0n8t/gutenberg-ingester/pkg/db"
 )
 
-func getDB(config ConfigStore) (*db.DB, error) {
+func getDB(config ConfigStore, autoSave bool) (*db.DB, error) {
 	dbLocation := config.GetString("database_location")
 
 	db, dbOpenErr := db.OpenDBFromFile(dbLocation)
@@ -15,7 +16,10 @@ func getDB(config ConfigStore) (*db.DB, error) {
 		return nil, fmt.Errorf("cannot open DB at location: %v with error: %v", dbLocation, dbOpenErr)
 	}
 
-	go startSaveDBThread(db, dbLocation)
+	if autoSave {
+		go startSaveDBThread(db, dbLocation)
+		log.Printf("db will be saved to %v every second", dbLocation)
+	}
 
 	return db, nil
 }
@@ -29,5 +33,4 @@ func startSaveDBThread(db *db.DB, dbSaveFile string) {
 			log.Fatalf("issue saving db: %v", err)
 		}
 	}
-
 }

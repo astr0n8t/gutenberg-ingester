@@ -3,19 +3,20 @@ package db
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/astr0n8t/gutenberg-ingester/pkg/history"
 	"os"
+
+	"github.com/astr0n8t/gutenberg-ingester/pkg/history"
 )
 
 func NewDB() *DB {
 	return &DB{
-		Version:  1,
-		Download: *history.NewHistory(),
+		Version:      1,
+		LastFullSync: "",
+		Download:     *history.NewHistory(),
 	}
 }
 
 func OpenDBFromFile(filename string) (*DB, error) {
-
 	var db DB
 	db.lock.Lock()
 
@@ -116,3 +117,12 @@ func (d *DB) GetDownloaded(id int) bool {
 	return d.Download.GetHistory(id)
 }
 
+func (d *DB) GetLastFullSync() string {
+	return d.LastFullSync
+}
+
+func (d *DB) SetLastFullSync(date string) {
+	d.lock.Lock()
+	d.LastFullSync = date
+	d.lock.Unlock()
+}

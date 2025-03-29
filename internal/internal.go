@@ -3,14 +3,13 @@ package internal
 import (
 	"log"
 	"os"
-	"strings"
 	"os/signal"
 	"path/filepath"
+	"strings"
 )
 
-// Runs gutenberg-ingester
+// Runs gutenberg-ingester daemon
 func Run() {
-
 	var config ConfigStore
 
 	// Make sure we can load config
@@ -23,13 +22,15 @@ func Run() {
 	}
 
 	log.Printf("attempting to open or create db at location: %v", config.GetString("database_location"))
-	db, dbErr := getDB(config)
+	db, dbErr := getDB(config, true)
 	if dbErr != nil {
 		log.Fatalf("issue initializing db: %v", dbErr)
 	} else {
 		log.Printf("successfuly opened db at location: %v", config.GetString("database_location"))
 	}
 
+	log.Printf("DB 0 downloaded: %v", db.GetDownloaded(0))
+	db.SetDownloaded(0)
 	log.Printf("DB 0 downloaded: %v", db.GetDownloaded(0))
 
 	// Don't exit until we receive stop from the OS
@@ -42,15 +43,15 @@ func Run() {
 func getRunMode() string {
 	runMode := "production"
 	ex, err := os.Executable()
-    if err != nil {
-        log.Fatalf("cannot determine run status: %v", err)
-    }
+	if err != nil {
+		log.Fatalf("cannot determine run status: %v", err)
+	}
 
 	// Check if we're running in a dev build
-    dir := filepath.Dir(ex)
-    if strings.Contains(dir, "go-build") {
-    	runMode = "development"
-    } 
+	dir := filepath.Dir(ex)
+	if strings.Contains(dir, "go-build") {
+		runMode = "development"
+	}
 
-    return runMode
+	return runMode
 }
