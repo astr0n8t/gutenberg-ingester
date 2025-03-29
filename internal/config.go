@@ -47,6 +47,7 @@ func LoadConfigProvider(appName string) ConfigStore {
 
 func setDefaults(v *viper.Viper) {
 	v.SetDefault("database_location", "/var/gutenberg-ingester/db.json")
+	v.SetDefault("temporary_directory", "/tmp")
 	v.SetDefault("download_type", []string{".epub3.images", ".epub", ".txt"})
 	v.SetDefault("download_type_precedence", "sequential")
 	v.SetDefault("download_delay", 2)

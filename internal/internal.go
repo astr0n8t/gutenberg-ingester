@@ -33,6 +33,31 @@ func Run() {
 	db.SetDownloaded(0)
 	log.Printf("DB 0 downloaded: %v", db.GetDownloaded(0))
 
+	//	catalog, catalogErr := pullCatalog(config)
+	//	if catalogErr != nil {
+	//		log.Printf("error pulling catalog: %v", catalogErr)
+	//	} else {
+	//		log.Printf("pulled catalog and saved to: %v", catalog)
+	//	}
+	catalog := "/tmp/gutenberg-catalog.tar.zip"
+	rdfNum, rdfRecordErr := getNumberOfRDFRecords(catalog)
+	if rdfRecordErr != nil {
+		log.Printf("issue reading rdf number from catalog: %v", rdfRecordErr)
+	} else {
+		log.Printf("Number of RDF records is %v", rdfNum)
+	}
+
+	rdfRecord, rdfErr := getRDFByID(1, catalog)
+	if rdfErr != nil {
+		log.Printf("issue reading rdf file from catalog: %v", rdfErr)
+	}
+
+	rdfName, rdfNameError := rdfRecord.Name()
+	if rdfNameError != nil {
+		log.Printf("issue reading rdf name from catalog: %v", rdfNameError)
+	}
+	log.Printf("Title of RDF record tile: %v", rdfName)
+
 	// Don't exit until we receive stop from the OS
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt)

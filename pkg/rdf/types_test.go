@@ -19,7 +19,6 @@ func TestParseXML(t *testing.T) {
 	var rdf RDF
 
 	err = xml.Unmarshal(bytes, &rdf)
-
 	if err != nil {
 		t.Errorf("Issue unmarshling XML: %v", err)
 	}

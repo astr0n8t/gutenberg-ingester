@@ -14,7 +14,6 @@ func (b *BookItem) Id() (int, error) {
 	urlParts := strings.Split(b.Link, `/`)
 	idStr := urlParts[len(urlParts)-1]
 	id, err = strconv.Atoi(idStr)
-
 	if err != nil {
 		return -1, err
 	}
