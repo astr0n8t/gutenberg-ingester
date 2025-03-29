@@ -78,5 +78,3 @@ func (r *RDF) URL() (string, error) {
 
 	return url, nil
 }
-
-

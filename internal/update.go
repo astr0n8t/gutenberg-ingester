@@ -2,9 +2,10 @@ package internal
 
 import (
 	"encoding/xml"
-	"github.com/astr0n8t/gutenberg-ingester/pkg/rss"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/astr0n8t/gutenberg-ingester/pkg/rss"
 )
 
 func pullRSS(url string) (rss.RSS, error) {

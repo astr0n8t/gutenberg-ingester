@@ -2,10 +2,10 @@ package rdf
 
 import (
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
-	"fmt"
 )
 
 func TestParseXML(t *testing.T) {
