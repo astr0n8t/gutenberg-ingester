@@ -22,8 +22,8 @@ func (r *RDF) Id() (int, error) {
 	return id, nil
 }
 
-// Returns the Title of the record
-func (r *RDF) Title() (string, error) {
+// Returns the Name of the record
+func (r *RDF) Name() (string, error) {
 	return r.Ebook.Title, nil
 }
 
@@ -31,15 +31,17 @@ func (r *RDF) Title() (string, error) {
 func (r *RDF) Language() (string, error) {
 	languages := map[string]string{
 		"en": "english",
+		"es": "spanish",
 		"fr": "french",
 		"de": "german",
 		"fi": "finnish",
 		"nl": "dutch",
 		"it": "italian",
 		"pt": "portuguese",
+		"eo": "esperanto",
 	}
 
-	lang := r.Ebook.Language.Text
+	lang := r.Ebook.Language.Description.Value.Text
 
 	normalizedLang, ok := languages[lang]
 

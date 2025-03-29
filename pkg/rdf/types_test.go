@@ -29,7 +29,7 @@ func TestParseXML(t *testing.T) {
 		t.Errorf("Issue unmarshling XML: %v", idErr)
 	}
 	fmt.Printf("ID is %v\n", id)
-	title, titleErr := rdf.Title()
+	title, titleErr := rdf.Name()
 	if titleErr != nil {
 		t.Errorf("Issue unmarshling XML: %v", titleErr)
 	}
@@ -39,4 +39,9 @@ func TestParseXML(t *testing.T) {
 		t.Errorf("Issue unmarshling XML: %v", urlErr)
 	}
 	fmt.Printf("URL is %v\n", url)
+	lang, langErr := rdf.Language()
+	if langErr != nil {
+		t.Errorf("Issue unmarshling XML: %v", langErr)
+	}
+	fmt.Printf("Language is %v\n", lang)
 }

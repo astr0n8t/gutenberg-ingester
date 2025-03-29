@@ -17,7 +17,7 @@ download_type_precedence: sequential
 download_delay: 2
 # Filter download by language
 # Supported values are all (must be the first and only item in the list), 
-# english, french, german, finnish, dutch, italian, portuguese
+# english, french, spanish, german, finnish, dutch, italian, portuguese, esperanto
 download_languages: 
   - english
 # Whether to re-download updated books that already exist

@@ -1,1 +1,157 @@
-<?xml version="1.0" encoding="UTF-8"?><collection xmlns="http://www.loc.gov/MARC21/slim"><record><leader>     cam a22     3u 4500</leader><controlfield tag="001">1</controlfield><controlfield tag="003">UtSlPG</controlfield><controlfield tag="006">m</controlfield><controlfield tag="007">cr n</controlfield><controlfield tag="008">250207r1971||||utu|||||o|||||||||||||| d</controlfield><datafield ind1=" " ind2=" " tag="040"><subfield code="a">UtSlPG</subfield></datafield><datafield ind1=" " ind2="7" tag="041"><subfield code="a">en</subfield><subfield code="2">iso639-1</subfield></datafield><datafield ind1=" " ind2="4" tag="050"><subfield code="a">E201</subfield><subfield code="a">JK</subfield></datafield><datafield ind1="1" ind2=" " tag="100"><subfield code="a">Jefferson, Thomas,</subfield><subfield code="d">1743-1826</subfield></datafield><datafield ind1="1" ind2="4" tag="245"><subfield code="a">The Declaration of Independence of the United States of America</subfield></datafield><datafield ind1=" " ind2="1" tag="264"><subfield code="a">Salt Lake City, UT :</subfield><subfield code="b">Project Gutenberg,</subfield><subfield code="c">1971</subfield></datafield><datafield ind1=" " ind2=" " tag="300"><subfield code="a">1 online resource :</subfield><subfield code="b">multiple file formats</subfield></datafield><datafield ind1=" " ind2=" " tag="336"><subfield code="a">text</subfield><subfield code="b">txt</subfield><subfield code="2">rdacontent</subfield></datafield><datafield ind1=" " ind2=" " tag="337"><subfield code="a">computer</subfield><subfield code="b">c</subfield><subfield code="2">rdamedia</subfield></datafield><datafield ind1=" " ind2=" " tag="338"><subfield code="a">online resource</subfield><subfield code="b">cr</subfield><subfield code="2">rdacarrier</subfield></datafield><datafield ind1=" " ind2=" " tag="500"><subfield code="a">Wikipedia page about this book: https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence</subfield></datafield><datafield ind1=" " ind2=" " tag="500"><subfield code="a">This is the original PG edition. See also our revised edition: #16780 See also #300</subfield></datafield><datafield ind1=" " ind2=" " tag="500"><subfield code="a">Reading ease score: 52.1 (10th to 12th grade). Somewhat difficult to read.</subfield></datafield><datafield ind1=" " ind2=" " tag="500"><subfield code="a">Release date is 1971-12-01</subfield></datafield><datafield ind1=" " ind2=" " tag="520"><subfield code="a">"The Declaration of Independence of the United States of America" by Thomas Jefferson is a historic and foundational document penned in the late 18th century during the American Revolutionary period. This work primarily serves as a formal statement declaring the thirteen American colonies' separation from British rule, asserting their right to self-governance and independence. It encapsulates the philosophical underpinnings of democracy, highlighting fundamental human rights and the social contract between the government and the governed.  The text begins with a powerful introduction that outlines the principles of equality and the unalienable rights of individuals to life, liberty, and the pursuit of happiness. It details the various grievances against King George III, illustrating how his actions have eroded the colonists' rights and justified their decision to seek independence. By listing these grievances, the document seeks to assert the colonies' legitimate claim to self-determination. The Declaration culminates in a solemn proclamation of independence, stating that the colonies are entitled to be free and independent states, free from British authority and capable of forming their own alliances, levying war, and engaging in commerce. The Declaration's closing emphasizes the signers' mutual pledge to support this cause, reinforcing the commitment of the colonists to their newly proclaimed liberty. (This is an automatically generated summary.)</subfield></datafield><datafield ind1=" " ind2=" " tag="534"><subfield code="n">Original publication data not identified</subfield></datafield><datafield ind1=" " ind2=" " tag="653"><subfield code="a">United States -- History -- Revolution, 1775-1783 -- Sources</subfield></datafield><datafield ind1=" " ind2=" " tag="653"><subfield code="a">United States. Declaration of Independence</subfield></datafield><datafield ind1="4" ind2="0" tag="856"><subfield code="a">https://www.gutenberg.org/ebooks/1</subfield></datafield></record><record><leader>     cam a22     3u 4500</leader><controlfield tag="001">2</controlfield><controlfield tag="003">UtSlPG</controlfield><controlfield tag="006">m</controlfield><controlfield tag="007">cr n</controlfield><controlfield tag="008">250207r1972||||utu|||||o|||||||||||||| d</controlfield><datafield ind1=" " ind2=" " tag="040"><subfield code="a">UtSlPG</subfield></datafield><datafield ind1=" " ind2="7" tag="041"><subfield code="a">en</subfield><subfield code="2">iso639-1</subfield></datafield><datafield ind1=" " ind2="4" tag="050"><subfield code="a">JK</subfield><subfield code="a">KF</subfield></datafield><datafield ind1="1" ind2=" " tag="100"><subfield code="a">United States</subfield></datafield><datafield ind1="1" ind2="4" tag="245"><subfield code="a">The United States Bill of Rights :</subfield><subfield code="b">The Ten Original Amendments to the Constitution of the United States</subfield></datafield><datafield ind1=" " ind2="1" tag="264"><subfield code="a">Salt Lake City, UT :</subfield><subfield code="b">Project Gutenberg,</subfield><subfield code="c">1972</subfield></datafield><datafield ind1=" " ind2=" " tag="300"><subfield code="a">1 online resource :</subfield><subfield code="b">multiple file formats</subfield></datafield><datafield ind1=" " ind2=" " tag="336"><subfield code="a">text</subfield><subfield code="b">txt</subfield><subfield code="2">rdacontent</subfield></datafield><datafield ind1=" " ind2=" " tag="337"><subfield code="a">computer</subfield><subfield code="b">c</subfield><subfield code="2">rdamedia</subfield></datafield><datafield ind1=" " ind2=" " tag="338"><subfield code="a">online resource</subfield><subfield code="b">cr</subfield><subfield code="2">rdacarrier</subfield></datafield><datafield ind1=" " ind2=" " tag="500"><subfield code="a">Wikipedia page about this book: https://en.wikipedia.org/wiki/United_States_Bill_of_Rights</subfield></datafield><datafield ind1=" " ind2=" " tag="500"><subfield code="a">Reading ease score: 39.8 (College-level). Difficult to read.</subfield></datafield><datafield ind1=" " ind2=" " tag="500"><subfield code="a">Release date is 1972-12-01</subfield></datafield><datafield ind1=" " ind2=" " tag="520"><subfield code="a">"The United States Bill of Rights" by United States is a foundational legal document, crafted in the late 18th century during the period of the early republic. It consists of the first ten amendments to the United States Constitution and serves as a crucial protection of individual liberties and rights. The book outlines specific prohibitions on governmental power, addressing the rights of citizens and the parameters within which the government can operate.  The Bill of Rights establishes essential freedoms, including the freedom of speech, the right to bear arms, protections against unreasonable searches, and the right to fair legal proceedings. Each amendment articulates fundamental rights, such as the protection from self-incrimination and guarantees of a speedy trial, which are designed to ensure justice and equity. It emphasizes the significance of civil liberties and sets limits on governmental authority, reinforcing the principle that certain rights are inherent to the people and cannot be infringed upon. Overall, the document is pivotal in defining the relationship between the state and its citizens, serving as a cornerstone of American democracy. (This is an automatically generated summary.)</subfield></datafield><datafield ind1=" " ind2=" " tag="534"><subfield code="n">Original publication data not identified</subfield></datafield><datafield ind1=" " ind2=" " tag="653"><subfield code="a">Civil rights -- United States -- Sources</subfield></datafield><datafield ind1=" " ind2=" " tag="653"><subfield code="a">United States. Constitution. 1st-10th Amendments</subfield></datafield><datafield ind1="4" ind2="0" tag="856"><subfield code="a">https://www.gutenberg.org/ebooks/2</subfield></datafield></record></collection>
+<?xml version="1.0" encoding="UTF-8"?>
+<collection
+	xmlns="http://www.loc.gov/MARC21/slim">
+	<record>
+		<leader>     cam a22     3u 4500</leader>
+		<controlfield tag="001">1</controlfield>
+		<controlfield tag="003">UtSlPG</controlfield>
+		<controlfield tag="006">m</controlfield>
+		<controlfield tag="007">cr n</controlfield>
+		<controlfield tag="008">250325r1971||||utu|||||o|||||||||||||| d</controlfield>
+		<datafield ind1=" " ind2=" " tag="040">
+			<subfield code="a">UtSlPG</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="7" tag="041">
+			<subfield code="a">en</subfield>
+			<subfield code="2">iso639-1</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="4" tag="050">
+			<subfield code="a">E201</subfield>
+			<subfield code="a">JK</subfield>
+		</datafield>
+		<datafield ind1="1" ind2=" " tag="100">
+			<subfield code="a">Jefferson, Thomas,</subfield>
+			<subfield code="d">1743-1826</subfield>
+		</datafield>
+		<datafield ind1="1" ind2="4" tag="245">
+			<subfield code="a">The Declaration of Independence of the United States of America</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="1" tag="264">
+			<subfield code="a">Salt Lake City, UT :</subfield>
+			<subfield code="b">Project Gutenberg,</subfield>
+			<subfield code="c">1971</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="300">
+			<subfield code="a">1 online resource :</subfield>
+			<subfield code="b">multiple file formats</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="336">
+			<subfield code="a">text</subfield>
+			<subfield code="b">txt</subfield>
+			<subfield code="2">rdacontent</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="337">
+			<subfield code="a">computer</subfield>
+			<subfield code="b">c</subfield>
+			<subfield code="2">rdamedia</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="338">
+			<subfield code="a">online resource</subfield>
+			<subfield code="b">cr</subfield>
+			<subfield code="2">rdacarrier</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="500">
+			<subfield code="a">Wikipedia page about this book: https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="500">
+			<subfield code="a">This is the original PG edition.
+ See also our revised edition: #16780
+ See also #300</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="500">
+			<subfield code="a">Reading ease score: 52.1 (10th to 12th grade). Somewhat difficult to read.</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="500">
+			<subfield code="a">Release date is 1971-12-01</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="520">
+			<subfield code="a">"The Declaration of Independence of the United States of America" by Thomas Jefferson is a historic and foundational document penned in the late 18th century during the American Revolutionary period. This work primarily serves as a formal statement declaring the thirteen American colonies' separation from British rule, asserting their right to self-governance and independence. It encapsulates the philosophical underpinnings of democracy, highlighting fundamental human rights and the social contract between the government and the governed.  The text begins with a powerful introduction that outlines the principles of equality and the unalienable rights of individuals to life, liberty, and the pursuit of happiness. It details the various grievances against King George III, illustrating how his actions have eroded the colonists' rights and justified their decision to seek independence. By listing these grievances, the document seeks to assert the colonies' legitimate claim to self-determination. The Declaration culminates in a solemn proclamation of independence, stating that the colonies are entitled to be free and independent states, free from British authority and capable of forming their own alliances, levying war, and engaging in commerce. The Declaration's closing emphasizes the signers' mutual pledge to support this cause, reinforcing the commitment of the colonists to their newly proclaimed liberty. (This is an automatically generated summary.)</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="534">
+			<subfield code="n">Original publication data not identified</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="653">
+			<subfield code="a">United States -- History -- Revolution, 1775-1783 -- Sources</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="653">
+			<subfield code="a">United States. Declaration of Independence</subfield>
+		</datafield>
+		<datafield ind1="4" ind2="0" tag="856">
+			<subfield code="u">https://www.gutenberg.org/ebooks/1</subfield>
+		</datafield>
+	</record>
+	<record>
+		<leader>     cam a22     3u 4500</leader>
+		<controlfield tag="001">2</controlfield>
+		<controlfield tag="003">UtSlPG</controlfield>
+		<controlfield tag="006">m</controlfield>
+		<controlfield tag="007">cr n</controlfield>
+		<controlfield tag="008">250325r1972||||utu|||||o|||||||||||||| d</controlfield>
+		<datafield ind1=" " ind2=" " tag="040">
+			<subfield code="a">UtSlPG</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="7" tag="041">
+			<subfield code="a">en</subfield>
+			<subfield code="2">iso639-1</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="4" tag="050">
+			<subfield code="a">JK</subfield>
+			<subfield code="a">KF</subfield>
+		</datafield>
+		<datafield ind1="1" ind2=" " tag="100">
+			<subfield code="a">United States</subfield>
+		</datafield>
+		<datafield ind1="1" ind2="4" tag="245">
+			<subfield code="a">The United States Bill of Rights :</subfield>
+			<subfield code="b">The Ten Original Amendments to the Constitution of the United States</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="1" tag="264">
+			<subfield code="a">Salt Lake City, UT :</subfield>
+			<subfield code="b">Project Gutenberg,</subfield>
+			<subfield code="c">1972</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="300">
+			<subfield code="a">1 online resource :</subfield>
+			<subfield code="b">multiple file formats</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="336">
+			<subfield code="a">text</subfield>
+			<subfield code="b">txt</subfield>
+			<subfield code="2">rdacontent</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="337">
+			<subfield code="a">computer</subfield>
+			<subfield code="b">c</subfield>
+			<subfield code="2">rdamedia</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="338">
+			<subfield code="a">online resource</subfield>
+			<subfield code="b">cr</subfield>
+			<subfield code="2">rdacarrier</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="500">
+			<subfield code="a">Wikipedia page about this book: https://en.wikipedia.org/wiki/United_States_Bill_of_Rights</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="500">
+			<subfield code="a">Reading ease score: 39.8 (College-level). Difficult to read.</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="500">
+			<subfield code="a">Release date is 1972-12-01</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="520">
+			<subfield code="a">"The United States Bill of Rights" by United States is a foundational legal document, crafted in the late 18th century during the period of the early republic. It consists of the first ten amendments to the United States Constitution and serves as a crucial protection of individual liberties and rights. The book outlines specific prohibitions on governmental power, addressing the rights of citizens and the parameters within which the government can operate.  The Bill of Rights establishes essential freedoms, including the freedom of speech, the right to bear arms, protections against unreasonable searches, and the right to fair legal proceedings. Each amendment articulates fundamental rights, such as the protection from self-incrimination and guarantees of a speedy trial, which are designed to ensure justice and equity. It emphasizes the significance of civil liberties and sets limits on governmental authority, reinforcing the principle that certain rights are inherent to the people and cannot be infringed upon. Overall, the document is pivotal in defining the relationship between the state and its citizens, serving as a cornerstone of American democracy. (This is an automatically generated summary.)</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="534">
+			<subfield code="n">Original publication data not identified</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="653">
+			<subfield code="a">Civil rights -- United States -- Sources</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="653">
+			<subfield code="a">United States. Constitution. 1st-10th Amendments</subfield>
+		</datafield>
+		<datafield ind1="4" ind2="0" tag="856">
+			<subfield code="u">https://www.gutenberg.org/ebooks/2</subfield>
+		</datafield>
+	</record>
+</collection>

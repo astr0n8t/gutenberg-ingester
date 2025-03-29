@@ -30,7 +30,7 @@ func TestParseRSS(t *testing.T) {
 			t.Errorf("Issue unmarshling XML: %v", idErr)
 		}
 		fmt.Printf("ID is %v\n", id)
-		title, titleErr := i.Title()
+		title, titleErr := i.Name()
 		if titleErr != nil {
 			t.Errorf("Issue unmarshling XML: %v", titleErr)
 		}
@@ -40,5 +40,10 @@ func TestParseRSS(t *testing.T) {
 			t.Errorf("Issue unmarshling XML: %v", urlErr)
 		}
 		fmt.Printf("URL is %v\n", url)
+		lang, langErr := i.Language()
+		if langErr != nil {
+			t.Errorf("Issue unmarshling XML: %v", langErr)
+		}
+		fmt.Printf("Language is %v\n", lang)
 	}
 }

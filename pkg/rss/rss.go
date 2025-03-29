@@ -22,9 +22,9 @@ func (b *BookItem) Id() (int, error) {
 	return id, nil
 }
 
-// Returns the Title of the record
-func (b *BookItem) Title() (string, error) {
-	return b.Name, nil
+// Returns the Name of the record
+func (b *BookItem) Name() (string, error) {
+	return b.Title, nil
 }
 
 // Returns the URL of the record
@@ -40,11 +40,13 @@ func (b *BookItem) Language() (string, error) {
 	languages := map[string]string{
 		"English":    "english",
 		"French":     "french",
+		"Spanish":    "spanish",
 		"German":     "german",
 		"Finnish":    "finnish",
 		"Dutch":      "dutch",
 		"Italian":    "italian",
 		"Portuguese": "portuguese",
+		"Esperanto":  "esperanto",
 	}
 
 	normalizedLang, ok := languages[lang]

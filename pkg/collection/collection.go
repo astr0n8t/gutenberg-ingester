@@ -36,8 +36,8 @@ func (b *CollectionRecord) Id() (int, error) {
 	return id, nil
 }
 
-// Returns the Title of the record
-func (b *CollectionRecord) Title() (string, error) {
+// Returns the Name of the record
+func (b *CollectionRecord) Name() (string, error) {
 	title := ""
 
 	for _, d := range b.Datafields {
@@ -82,12 +82,14 @@ func (b *CollectionRecord) Language() (string, error) {
 
 	languages := map[string]string{
 		"en": "english",
+		"es": "spanish",
 		"fr": "french",
 		"de": "german",
 		"fi": "finnish",
 		"nl": "dutch",
 		"it": "italian",
 		"pt": "portuguese",
+		"eo": "esperanto",
 	}
 
 	normalizedLang, ok := languages[lang]
