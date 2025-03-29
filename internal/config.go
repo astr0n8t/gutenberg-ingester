@@ -7,9 +7,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Provider defines a set of read-only methods for accessing the application
+// ConfigStore defines a set of read-only methods for accessing the application
 // configuration params as defined in one of the config files.
-type Provider interface {
+type ConfigStore interface {
 	ConfigFileUsed() string
 	Get(key string) interface{}
 	GetBool(key string) bool
@@ -32,17 +32,17 @@ type Provider interface {
 var defaultConfig *viper.Viper
 
 // Config returns a default config providers
-func Config() Provider {
-	return defaultConfig
+func Config() ConfigStore {
+	return readViperConfig("GUTENBERG_INGESTER")
+}
+
+func DevConfig() ConfigStore {
+	return readViperDevConfig("GUTENBERG_INGESTER")
 }
 
 // LoadConfigProvider returns a configured viper instance
-func LoadConfigProvider(appName string) Provider {
+func LoadConfigProvider(appName string) ConfigStore {
 	return readViperConfig(appName)
-}
-
-func init() {
-	defaultConfig = readViperConfig("GUTENBERG_INGESTER")
 }
 
 func setDefaults(v *viper.Viper) {
@@ -54,6 +54,10 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("update_previously_downloaded", false)
 	v.SetDefault("gutenberg_feed_url", "https://www.gutenberg.org/cache/epub/")
 	v.SetDefault("gutenberg_mirror_url", "https://www.gutenberg.org/ebooks/")
+}
+
+func setDevOvverideDefaults(v *viper.Viper) {
+	v.SetDefault("database_location", "/tmp/gutenberg-ingester-db.json")
 }
 
 func readViperConfig(appName string) *viper.Viper {
@@ -68,6 +72,25 @@ func readViperConfig(appName string) *viper.Viper {
 	v.AddConfigPath("/etc/gutenberg-ingester/")
 
 	v.ReadInConfig()
+
+	v.SetEnvPrefix(appName)
+	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	v.AutomaticEnv()
+
+	// workaround because viper does not treat env vars the same as other config
+	for _, key := range v.AllKeys() {
+		val := v.Get(key)
+		v.Set(key, val)
+	}
+
+	return v
+}
+
+func readViperDevConfig(appName string) *viper.Viper {
+	v := viper.New()
+
+	setDefaults(v)
+	setDevOvverideDefaults(v)
 
 	v.SetEnvPrefix(appName)
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))

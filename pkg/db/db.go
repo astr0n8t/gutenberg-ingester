@@ -17,9 +17,11 @@ func NewDB() *DB {
 func OpenDBFromFile(filename string) (*DB, error) {
 
 	var db DB
+	db.lock.Lock()
 
 	fileInfo, fileInfoErr := os.Stat(filename)
 	if os.IsNotExist(fileInfoErr) {
+		db.lock.Unlock()
 		file, fileCreateErr := os.Create(filename)
 		if fileCreateErr != nil {
 			return nil, fmt.Errorf("failed to create download database file: %v with error: %v", filename, fileCreateErr)
@@ -34,6 +36,8 @@ func OpenDBFromFile(filename string) (*DB, error) {
 		db = *NewDB()
 		return &db, db.WriteDBToFile(filename)
 	}
+
+	defer db.lock.Unlock()
 
 	file, fileOpenErr := os.Open(filename)
 	if fileOpenErr != nil {
@@ -59,6 +63,9 @@ func OpenDBFromFile(filename string) (*DB, error) {
 }
 
 func (d *DB) WriteDBToFile(filename string) error {
+	d.lock.Lock()
+	defer d.lock.Unlock()
+
 	fileInfo, fileInfoErr := os.Stat(filename)
 	if os.IsNotExist(fileInfoErr) {
 		file, fileCreateErr := os.Create(filename)
@@ -75,17 +82,17 @@ func (d *DB) WriteDBToFile(filename string) error {
 
 	file, fileErr := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, fileInfo.Mode())
 	if fileErr != nil {
-		fmt.Errorf("failed to open download database file: %v with error: %v", filename, fileErr)
+		return fmt.Errorf("failed to open download database file: %v with error: %v", filename, fileErr)
 	}
 
 	jsonData, jsonErr := json.MarshalIndent(d, "", " ")
 	if jsonErr != nil {
-		fmt.Errorf("unable to marshal DB to json %v", jsonErr)
+		return fmt.Errorf("unable to marshal DB to json %v", jsonErr)
 	}
 
 	_, writeErr := file.Write(jsonData)
 	if writeErr != nil {
-		fmt.Errorf("unable to write DB to download database file: %v with error: %v", filename, writeErr)
+		return fmt.Errorf("unable to write DB to download database file: %v with error: %v", filename, writeErr)
 	}
 
 	file.Close()
@@ -94,13 +101,18 @@ func (d *DB) WriteDBToFile(filename string) error {
 }
 
 func (d *DB) SetDownloaded(id int) {
+	d.lock.Lock()
 	d.Download.SetHistory(id)
+	d.lock.Unlock()
 }
 
 func (d *DB) UnsetDownloaded(id int) {
+	d.lock.Lock()
 	d.Download.UnsetHistory(id)
+	d.lock.Unlock()
 }
 
 func (d *DB) GetDownloaded(id int) bool {
 	return d.Download.GetHistory(id)
 }
+
