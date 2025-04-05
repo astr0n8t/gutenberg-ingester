@@ -19,16 +19,16 @@ import (
 
 func (r *Runtime) startSyncSchedule() {
 	currentTimeUTC := time.Now().UTC()
-	// duration := currentTimeUTC.Sub(r.DB.GetLastFullSync())
-	// if duration.Hours()/24 >= float64(r.Config.GetInt("full_sync_frequency")) {
-	// 	log.Printf("Full sync due according to schedule")
-	// 	syncErr := r.fullSync()
-	// 	if syncErr != nil {
-	// 		log.Printf("error full syncing: %v", syncErr)
-	// 	}
-	// }
+	duration := currentTimeUTC.Sub(r.DB.GetLastFullSync())
+	if duration.Hours()/24 >= float64(r.Config.GetInt("full_sync_frequency")) {
+		log.Printf("Full sync due according to schedule")
+		syncErr := r.fullSync()
+		if syncErr != nil {
+			log.Printf("error full syncing: %v", syncErr)
+		}
+	}
 
-	duration := currentTimeUTC.Sub(r.DB.GetLastPartialSync())
+	duration = currentTimeUTC.Sub(r.DB.GetLastPartialSync())
 	if duration.Hours() >= float64(r.Config.GetInt("partial_sync_frequency")) {
 		log.Printf("Partial RSS sync due according to schedule")
 		syncErr := r.partialSync()

@@ -10,6 +10,8 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
+RUN mkdir -p /var/gutenberg-ingester /data
+
 COPY *.go ./
 # Copy all internal modules
 COPY cmd/*.go ./cmd/
@@ -28,7 +30,11 @@ FROM gcr.io/distroless/static-debian11 AS build-release-stage
 WORKDIR /
 
 COPY --from=build-stage /gutenberg-ingester /gutenberg-ingester
+COPY --from=build-stage --chown=nonroot:nonroot /data /data
+COPY --from=build-stage --chown=nonroot:nonroot /var/gutenberg-ingester /var/gutenberg-ingester
 
 USER nonroot:nonroot
+
+WORKDIR /data
 
 ENTRYPOINT ["/gutenberg-ingester"]
