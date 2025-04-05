@@ -17,13 +17,13 @@ gutenberg-ingester:
   container_name: gutenberg_ingester
   restart: always
   environment:
-	# optional
+# optional
     - GUTENBERG_INGESTER_GUTENBERG_MIRROR_URL="https://www.gutenberg.org/" 
   volumes:
-    # where to store the state file
+# where to store the state file
   	- gutenberg_db:/var/gutenberg-ingester
-    # where to place the books (they can be post-processed and moved out of here)
+# where to place the books (they can be post-processed and moved out of here)
     - /mnt/books:/data
-	  # optional
+# optional
     - /etc/gutenberg-ingester/config.yaml:/etc/gutenberg-ingester/config.yaml
 ```
