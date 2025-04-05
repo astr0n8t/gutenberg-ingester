@@ -6,63 +6,50 @@ import (
 	"os/signal"
 	"path/filepath"
 	"strings"
+	"syscall"
 )
 
 // Runs gutenberg-ingester daemon
 func Run() {
-	var config ConfigStore
+	var runtime Runtime
 
 	// Make sure we can load config
 	if getRunMode() == "development" {
-		config = DevConfig()
+		runtime.Config = DevConfig()
 		log.Printf("Running in development mode, will read config from environment")
 	} else {
-		config = Config()
-		log.Printf("Loaded config file %v", config.ConfigFileUsed())
+		runtime.Config = Config()
+		log.Printf("Loaded config file %v", runtime.Config.ConfigFileUsed())
 	}
 
-	log.Printf("attempting to open or create db at location: %v", config.GetString("database_location"))
-	db, dbErr := getDB(config, true)
+	log.Printf("attempting to open or create db at location: %v", runtime.Config.GetString("database_location"))
+	var dbErr error
+	runtime.DB, dbErr = getDB(runtime.Config, true)
 	if dbErr != nil {
 		log.Fatalf("issue initializing db: %v", dbErr)
 	} else {
-		log.Printf("successfuly opened db at location: %v", config.GetString("database_location"))
+		log.Printf("successfuly opened db at location: %v", runtime.Config.GetString("database_location"))
 	}
 
-	log.Printf("DB 0 downloaded: %v", db.GetDownloaded(0))
-	db.SetDownloaded(0)
-	log.Printf("DB 0 downloaded: %v", db.GetDownloaded(0))
-
-	//	catalog, catalogErr := pullCatalog(config)
-	//	if catalogErr != nil {
-	//		log.Printf("error pulling catalog: %v", catalogErr)
-	//	} else {
-	//		log.Printf("pulled catalog and saved to: %v", catalog)
-	//	}
-	catalog := "/tmp/gutenberg-catalog.tar.zip"
-	rdfNum, rdfRecordErr := getNumberOfRDFRecords(catalog)
-	if rdfRecordErr != nil {
-		log.Printf("issue reading rdf number from catalog: %v", rdfRecordErr)
-	} else {
-		log.Printf("Number of RDF records is %v", rdfNum)
-	}
-
-	rdfRecord, rdfErr := getRDFByID(1, catalog)
-	if rdfErr != nil {
-		log.Printf("issue reading rdf file from catalog: %v", rdfErr)
-	}
-
-	rdfName, rdfNameError := rdfRecord.Name()
-	if rdfNameError != nil {
-		log.Printf("issue reading rdf name from catalog: %v", rdfNameError)
-	}
-	log.Printf("Title of RDF record tile: %v", rdfName)
+	// Start the main sync thread
+	log.Printf("Starting sync scheduler")
+	go runtime.startSyncSchedule()
 
 	// Don't exit until we receive stop from the OS
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, os.Interrupt)
-	log.Println("Press Ctrl+c to exit")
+	stop := make(chan os.Signal, 2)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 	<-stop
+
+	log.Printf("Writing DB before exiting\n")
+
+	// Lock the DB exclusively and hold the lock
+	err := runtime.DB.WriteDBToFileAndLock(runtime.Config.GetString("database_location"))
+	if err != nil {
+		log.Fatalf("issue saving db: %v", err)
+	}
+
+	log.Printf("DB written, exiting now.\n")
+	// exit
 }
 
 func getRunMode() string {

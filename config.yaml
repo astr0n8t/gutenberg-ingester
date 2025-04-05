@@ -6,6 +6,8 @@
 database_location: /var/gutenberg-ingester/db.json
 # Where to download temporary files to
 temporary_location: /tmp
+# Where to save downloaded files to
+download_location: ./
 # What type of book files you would like to download
 download_types: 
   - .epub3.images
@@ -25,7 +27,11 @@ download_languages:
 # Whether to re-download updated books that already exist
 update_previously_downloaded: false
 # The URL to pull the catalog from PG
-gutenberg_feed_url: https://www.gutenberg.org/cache/epub/
+gutenberg_feed_url: https://www.gutenberg.org/
 # The URL to pull files from PG
-gutenberg_mirror_url: https://www.gutenberg.org/ebooks/
+gutenberg_mirror_url: https://www.gutenberg.org/
+# How many days to initiate a full sync
+full_sync_frequency: 7
+# How many hours to do a RSS feed sync
+partial_sync_frequency: 12
 

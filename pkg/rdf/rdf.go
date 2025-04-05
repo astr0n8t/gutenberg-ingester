@@ -2,6 +2,7 @@ package rdf
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -14,7 +15,6 @@ func (r *RDF) Id() (int, error) {
 	urlParts := strings.Split(r.Ebook.About, `/`)
 	idStr := urlParts[len(urlParts)-1]
 	id, err = strconv.Atoi(idStr)
-
 	if err != nil {
 		return -1, err
 	}
@@ -77,4 +77,36 @@ func (r *RDF) URL() (string, error) {
 	url := strings.Join(urlParts[:], "/") + "/" + strconv.Itoa(id)
 
 	return url, nil
+}
+
+// Returns a map of download types and their urls
+func (r *RDF) Formats() (map[string]string, error) {
+	downloadMap := make(map[string]string)
+
+	for _, format := range r.Ebook.HasFormat {
+
+		url := format.File.About
+
+		urlParts := strings.Split(url, `/`)
+		if len(urlParts) < 3 {
+			log.Printf("could not parse url for format with unknown syntax: %v", url)
+			continue
+		}
+
+		fileFormat := urlParts[len(urlParts)-1]
+		fileFormatParts := strings.Split(fileFormat, `.`)
+		fileFormat = ""
+		for i := 1; i < len(fileFormatParts); i++ {
+			fileFormat += "." + fileFormatParts[i]
+		}
+
+		urlSlug := ""
+		for i := 3; i < len(urlParts); i++ {
+			urlSlug += "/" + urlParts[i]
+		}
+
+		downloadMap[fileFormat] = urlSlug
+	}
+
+	return downloadMap, nil
 }

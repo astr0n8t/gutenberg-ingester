@@ -4,15 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/astr0n8t/gutenberg-ingester/pkg/history"
 )
 
 func NewDB() *DB {
 	return &DB{
-		Version:      1,
-		LastFullSync: "",
-		Download:     *history.NewHistory(),
+		Version:         1,
+		LastFullSync:    time.Unix(0, 0),
+		LastPartialSync: time.Unix(0, 0),
+		Download:        *history.NewHistory(),
 	}
 }
 
@@ -63,9 +65,21 @@ func OpenDBFromFile(filename string) (*DB, error) {
 	return &db, nil
 }
 
+// Write DB to file, releasing lock when done
 func (d *DB) WriteDBToFile(filename string) error {
+	return d.writeDBToFile(filename, true)
+}
+
+// Write DB to file, and don't release the lock when done
+func (d *DB) WriteDBToFileAndLock(filename string) error {
+	return d.writeDBToFile(filename, false)
+}
+
+func (d *DB) writeDBToFile(filename string, releaseLock bool) error {
 	d.lock.Lock()
-	defer d.lock.Unlock()
+	if releaseLock {
+		defer d.lock.Unlock()
+	}
 
 	fileInfo, fileInfoErr := os.Stat(filename)
 	if os.IsNotExist(fileInfoErr) {
@@ -117,12 +131,22 @@ func (d *DB) GetDownloaded(id int) bool {
 	return d.Download.GetHistory(id)
 }
 
-func (d *DB) GetLastFullSync() string {
+func (d *DB) GetLastFullSync() time.Time {
 	return d.LastFullSync
 }
 
-func (d *DB) SetLastFullSync(date string) {
+func (d *DB) SetLastFullSync(date time.Time) {
 	d.lock.Lock()
 	d.LastFullSync = date
+	d.lock.Unlock()
+}
+
+func (d *DB) GetLastPartialSync() time.Time {
+	return d.LastPartialSync
+}
+
+func (d *DB) SetLastPartialSync(date time.Time) {
+	d.lock.Lock()
+	d.LastPartialSync = date
 	d.lock.Unlock()
 }
