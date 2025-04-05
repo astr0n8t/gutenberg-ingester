@@ -1,2 +1,37 @@
 ---
-# Place the config of your app here
+# The config file with its defaults
+
+# Where to save the download database to
+# The database just keeps track if it has processed a specific ID before
+database_location: /var/gutenberg-ingester/db.json
+# Where to download temporary files to
+temporary_location: /tmp
+# Where to save downloaded files to
+download_location: ./
+# What type of book files you would like to download
+download_types: 
+  - .epub3.images
+  - .epub
+  - .txt
+# How to interpret download_types:
+# sequential: try the first type, then if not available move to the next, and so on
+# parallel: grab all of the download_types listed
+download_type_precedence: sequential
+# The number of seconds to wait before downloading the next file
+download_delay: 2
+# Filter download by language
+# Supported values are all (must be the first and only item in the list), 
+# english, french, spanish, german, finnish, dutch, italian, portuguese, esperanto
+download_languages: 
+  - english
+# Whether to re-download updated books that already exist
+update_previously_downloaded: false
+# The URL to pull the catalog from PG
+gutenberg_feed_url: https://www.gutenberg.org/
+# The URL to pull files from PG
+gutenberg_mirror_url: https://www.gutenberg.org/
+# How many days to initiate a full sync
+full_sync_frequency: 7
+# How many hours to do a RSS feed sync
+partial_sync_frequency: 12
+
