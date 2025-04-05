@@ -13,7 +13,7 @@ RUN go mod download
 COPY *.go ./
 # Copy all internal modules
 COPY cmd/*.go ./cmd/
-COPY pkg/*.go ./pkg/
+COPY pkg/ ./pkg/
 COPY internal/*.go ./internal/
 COPY version/*.go ./version/
 
