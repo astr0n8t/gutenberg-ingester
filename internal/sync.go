@@ -6,7 +6,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -20,16 +19,16 @@ import (
 
 func (r *Runtime) startSyncSchedule() {
 	currentTimeUTC := time.Now().UTC()
-	duration := currentTimeUTC.Sub(r.DB.GetLastFullSync())
-	if duration.Hours()/24 >= float64(r.Config.GetInt("full_sync_frequency")) {
-		log.Printf("Full sync due according to schedule")
-		syncErr := r.fullSync()
-		if syncErr != nil {
-			log.Printf("error full syncing: %v", syncErr)
-		}
-	}
+	// duration := currentTimeUTC.Sub(r.DB.GetLastFullSync())
+	// if duration.Hours()/24 >= float64(r.Config.GetInt("full_sync_frequency")) {
+	// 	log.Printf("Full sync due according to schedule")
+	// 	syncErr := r.fullSync()
+	// 	if syncErr != nil {
+	// 		log.Printf("error full syncing: %v", syncErr)
+	// 	}
+	// }
 
-	duration = currentTimeUTC.Sub(r.DB.GetLastPartialSync())
+	duration := currentTimeUTC.Sub(r.DB.GetLastPartialSync())
 	if duration.Hours() >= float64(r.Config.GetInt("partial_sync_frequency")) {
 		log.Printf("Partial RSS sync due according to schedule")
 		syncErr := r.partialSync()
@@ -61,6 +60,16 @@ func (r *Runtime) fullSync() error {
 	zippedTarFile, readZippedTarError := zipReader.File[0].Open()
 	if readZippedTarError != nil {
 		return fmt.Errorf("error opening zipped tar reader for catalog: %v", readZippedTarError)
+	}
+
+	filterByLang := true
+	lang_filter := r.Config.GetStringSlice("download_languages")
+	lang_map := make(map[string]bool, len(lang_filter))
+	for _, v := range lang_filter {
+		lang_map[v] = true
+	}
+	if _, ok := lang_map["all"]; ok {
+		filterByLang = false
 	}
 
 	// Create a tar reader on top of the gzip reader
@@ -105,9 +114,24 @@ func (r *Runtime) fullSync() error {
 
 			var rdf rdf.RDF
 			xmlParseErr := xml.Unmarshal(rdfFile, &rdf)
-
 			if xmlParseErr != nil {
-				return fmt.Errorf("error parsing rdf of id: %v into xml into struct: %v", id, xmlParseErr)
+				log.Printf("error parsing rdf of id: %v into xml into struct: %v", id, xmlParseErr)
+				errs = true
+				continue
+			}
+
+			if filterByLang {
+				itemLang, langParseErr := rdf.Language()
+				if langParseErr != nil {
+					log.Printf("error getting lang from rdf of id: %v with: %v", id, langParseErr)
+					errs = true
+					continue
+				}
+
+				// if the lang is not in the map, skip it
+				if _, ok := lang_map[itemLang]; !ok {
+					continue
+				}
 			}
 
 			downloadErr := r.downloadFromRDF(rdf)
@@ -136,22 +160,110 @@ func (r *Runtime) fullSync() error {
 }
 
 func (r *Runtime) partialSync() error {
-	var rss rss.RSS
-	url := ""
+	log.Printf("Starting partial sync with Project Gutenberg...")
+	errs := false
 
-	resp, err := http.Get(url)
-	if err != nil {
-		return err
+	rss, rssPullErr := r.pullRSS()
+	if rssPullErr != nil {
+		return fmt.Errorf("error pulling rss: %v", rssPullErr)
 	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
 
-	err = xml.Unmarshal(body, &rss)
-	if err != nil {
-		return err
+	filterByLang := true
+	lang_filter := r.Config.GetStringSlice("download_languages")
+	lang_map := make(map[string]bool, len(lang_filter))
+	for _, v := range lang_filter {
+		lang_map[v] = true
+	}
+	if _, ok := lang_map["all"]; ok {
+		filterByLang = false
+	}
+
+	for _, item := range rss.Channel.Items {
+		id, idErr := item.Id()
+		if idErr != nil {
+			log.Printf("error getting id for rss item: %v", idErr)
+			errs = true
+			continue
+		}
+
+		// Skip item if we've already downloaded and we're not updating
+		if r.DB.GetDownloaded(id) && !r.Config.GetBool("update_previously_downloaded") {
+			continue
+		}
+
+		rdf, rdfPullErr := r.pullRDF(id)
+		if rdfPullErr != nil {
+			log.Printf("error pulling rdf for id: %v with: %v", id, rdfPullErr)
+			errs = true
+			continue
+		}
+
+		if filterByLang {
+			itemLang, langParseErr := rdf.Language()
+			if langParseErr != nil {
+				log.Printf("error getting lang from rdf of id: %v with: %v", id, langParseErr)
+				errs = true
+				continue
+			}
+
+			// if the lang is not in the map, skip it
+			if _, ok := lang_map[itemLang]; !ok {
+				continue
+			}
+		}
+
+		downloadErr := r.downloadFromRDF(*rdf)
+		if downloadErr != nil {
+			log.Printf("error downloading items for id: %v", id)
+			errs = true
+			continue
+		}
+	}
+
+	if errs {
+		log.Printf("Finished partial sync with Project Gutenberg with one or more errors")
+	} else {
+		log.Printf("Finished partial sync with Project Gutenberg with no errors")
 	}
 
 	return nil
+}
+
+func (r *Runtime) pullRSS() (*rss.RSS, error) {
+	rssURL := strings.TrimSuffix(r.Config.GetString("gutenberg_feed_url"), "/")
+	rssURL += "/cache/epub/feeds/today.rss"
+
+	rssBytes, rssPullErr := downloadFromURLToBytes(rssURL)
+	if rssPullErr != nil {
+		return nil, fmt.Errorf("error pulling RSS feed: %v", rssPullErr)
+	}
+
+	var rss rss.RSS
+	rssUnmarshalErr := xml.Unmarshal(rssBytes.Bytes(), &rss)
+	if rssUnmarshalErr != nil {
+		return nil, fmt.Errorf("error unmarshalling RSS feed: %v", rssUnmarshalErr)
+	}
+
+	return &rss, nil
+}
+
+func (r *Runtime) pullRDF(id int) (*rdf.RDF, error) {
+	idStr := strconv.Itoa(id)
+	rdfURL := strings.TrimSuffix(r.Config.GetString("gutenberg_mirror_url"), "/")
+	rdfURL += "/ebooks/" + idStr + ".rdf"
+
+	rdfBytes, rdfPullErr := downloadFromURLToBytes(rdfURL)
+	if rdfPullErr != nil {
+		return nil, fmt.Errorf("error pulling RDF for item: %v with: %v", id, rdfPullErr)
+	}
+
+	var rdf rdf.RDF
+	rdfUnmarshalErr := xml.Unmarshal(rdfBytes.Bytes(), &rdf)
+	if rdfUnmarshalErr != nil {
+		return nil, fmt.Errorf("error unmarshalling RDF feed: %v", rdfUnmarshalErr)
+	}
+
+	return &rdf, nil
 }
 
 func (r *Runtime) pullCatalog() error {

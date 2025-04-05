@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"log"
@@ -116,4 +117,45 @@ func downloadFromURLToFile(fileUrl string, filename string) error {
 	}
 
 	return nil
+}
+
+func downloadFromURLToBytes(fileUrl string) (*bytes.Buffer, error) {
+	// 1. Fetch the initial URL and handle redirection (302)
+	resp, getErr := http.Get(fileUrl)
+	if getErr != nil {
+		return nil, fmt.Errorf("error fetching URL: %w", getErr)
+	}
+	defer resp.Body.Close()
+
+	// Check for redirection (302)
+	if resp.StatusCode == http.StatusFound { // StatusFound is 302
+		locationURL, locationHeaderErr := url.Parse(resp.Header.Get("Location"))
+		if locationHeaderErr != nil {
+			return nil, fmt.Errorf("error parsing redirection URL: %w", locationHeaderErr)
+		}
+		// Handle relative URLs, making sure they're absolute.
+		if !locationURL.IsAbs() {
+			baseURL, _ := url.Parse(fileUrl) // Use the original URL for the base.
+			locationURL = baseURL.ResolveReference(locationURL)
+		}
+		resp, getErr := http.Get(locationURL.String()) // Fetch the redirected URL
+		if getErr != nil {
+			return nil, fmt.Errorf("error fetching redirected URL: %w", getErr)
+		}
+		defer resp.Body.Close()
+	}
+
+	// Check for successful status code
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
+
+	buf := new(bytes.Buffer)
+	// 3. Copy the response body to the output file
+	_, copyErr := io.Copy(buf, resp.Body)
+	if copyErr != nil {
+		return nil, fmt.Errorf("error copying response body: %w", copyErr)
+	}
+
+	return buf, nil
 }
