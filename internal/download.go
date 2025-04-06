@@ -68,9 +68,8 @@ func (r *Runtime) downloadFromRDF(rdf rdf.RDF) error {
 		}
 
 		time.Sleep(download_delay)
+		r.DB.SetDownloaded(id)
 	}
-
-	r.DB.SetDownloaded(id)
 
 	return nil
 }
