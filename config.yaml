@@ -34,4 +34,5 @@ gutenberg_mirror_url: https://www.gutenberg.org/
 full_sync_frequency: 7
 # How many hours to do a RSS feed sync
 partial_sync_frequency: 12
-
+# option to save all epub type files as .epub instead of .epub3.images
+epub_use_proper_extension: false

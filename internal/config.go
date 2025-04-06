@@ -59,6 +59,7 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("gutenberg_mirror_url", "https://www.gutenberg.org/")
 	v.SetDefault("full_sync_frequency", 7)
 	v.SetDefault("partial_sync_frequency", 12)
+	v.SetDefault("epub_use_proper_extension", false)
 }
 
 func setDevOverideDefaults(v *viper.Viper) {
