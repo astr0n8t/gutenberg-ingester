@@ -9,7 +9,7 @@ temporary_location: /tmp
 # Where to save downloaded files to
 download_location: ./
 # What type of book files you would like to download
-download_types: 
+download_type: 
   - .epub3.images
   - .epub
   - .txt
