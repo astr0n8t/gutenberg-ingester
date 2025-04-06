@@ -21,7 +21,7 @@ gutenberg-ingester:
     - GUTENBERG_INGESTER_GUTENBERG_MIRROR_URL="https://www.gutenberg.org/" 
   volumes:
 # where to store the state file
-  	- gutenberg_db:/var/gutenberg-ingester
+    - gutenberg_db:/var/gutenberg-ingester
 # where to place the books (they can be post-processed and moved out of here)
     - /mnt/books:/data
 # optional
