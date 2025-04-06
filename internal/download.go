@@ -58,6 +58,9 @@ func (r *Runtime) downloadFromRDF(rdf rdf.RDF) error {
 	download_delay := time.Duration(r.Config.GetInt("download_delay")) * time.Second
 
 	for format, url := range downloads {
+		if format == ".epub3.images" && r.Config.GetBool("epub_use_proper_extension") {
+			format = ".epub"
+		}
 		filename := strings.TrimSuffix(download_location, "/") + "/" + idStr + format
 		downloadErr := downloadFromURLToFile(url, filename)
 		if downloadErr != nil {
