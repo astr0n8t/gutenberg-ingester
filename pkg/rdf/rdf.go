@@ -87,6 +87,11 @@ func (r *RDF) Formats() (map[string]string, error) {
 
 		url := format.File.About
 
+		// ignore readme files
+		if strings.Contains(url, "readme") {
+			continue
+		}
+
 		urlParts := strings.Split(url, `/`)
 		if len(urlParts) < 3 {
 			log.Printf("could not parse url for format with unknown syntax: %v", url)
