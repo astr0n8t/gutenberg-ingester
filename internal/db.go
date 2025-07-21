@@ -18,7 +18,7 @@ func getDB(config ConfigStore, autoSave bool) (*db.DB, error) {
 
 	if autoSave {
 		go startSaveDBThread(db, dbLocation)
-		log.Printf("db will be saved to %v every second", dbLocation)
+		log.Printf("db will be saved to %v every 60 seconds", dbLocation)
 	}
 
 	return db, nil
@@ -27,7 +27,7 @@ func getDB(config ConfigStore, autoSave bool) (*db.DB, error) {
 func startSaveDBThread(db *db.DB, dbSaveFile string) {
 	for {
 		// save state once a second
-		time.Sleep(1 * time.Second)
+		time.Sleep(60 * time.Second)
 		err := db.WriteDBToFile(dbSaveFile)
 		if err != nil {
 			log.Fatalf("issue saving db: %v", err)
